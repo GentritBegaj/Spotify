@@ -388,6 +388,7 @@ svg path {
 main {
   overflow-y: scroll;
   overflow-x: hidden;
+  height: 90%;
 }
 
 main p {
@@ -632,7 +633,6 @@ html {
 
   main {
     position: relative;
-    top: 70px;
     left: 0;
     width: 100%;
     text-align: center;
