@@ -1163,10 +1163,10 @@
     <script>
       window.onload = () => {
         let isLoggedIn = JSON.parse(localStorage.getItem("isLoggedin"));
-
+        let usernameFromInput = localStorage.getItem("username1");
         let signUpButtonHome = document.querySelector("#sign-up");
         let loginButton = document.querySelector("#login");
-        signUpButtonHome.style.display = isLoggedIn ? "none" : "block";
+        signUpButtonHome.value = isLoggedIn ? usernameFromInput : "block";
         loginButton.style.display = isLoggedIn ? "none" : "block";
       };
 

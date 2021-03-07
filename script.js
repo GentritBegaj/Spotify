@@ -184,16 +184,13 @@ function loginButtonPressed(hideButtons) {
       usernameInput.value == users[i].username &&
       passwordInput.value == users[i].password
     ) {
-      localStorage.setItem('isLoggedin','true')
+      localStorage.setItem("isLoggedin", "true");
+      localStorage.setItem("username1", usernameInput.value);
       window.location.href = "homepage.html";
       return;
-   
     } else {
-    
       window.location = "loginpage.html";
       return;
     }
   }
 }
-
-
