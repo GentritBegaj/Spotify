@@ -184,17 +184,16 @@ function loginButtonPressed(hideButtons) {
       usernameInput.value == users[i].username &&
       passwordInput.value == users[i].password
     ) {
-      window.location = "homepage.html";
-
-      hideButtons();
+      localStorage.setItem('isLoggedin','true')
+      window.location.href = "homepage.html";
+      return;
+   
     } else {
+    
       window.location = "loginpage.html";
       return;
     }
   }
 }
 
-function hideButtons() {
-  let signUpButtonHome = document.querySelector("#sign-up");
-  signUpButtonHome.style.display = "none";
-}
+

@@ -1161,6 +1161,15 @@
     ></script>
 
     <script>
+      window.onload = () => {
+        let isLoggedIn = JSON.parse(localStorage.getItem("isLoggedin"));
+
+        let signUpButtonHome = document.querySelector("#sign-up");
+        let loginButton = document.querySelector("#login");
+        signUpButtonHome.style.display = isLoggedIn ? "none" : "block";
+        loginButton.style.display = isLoggedIn ? "none" : "block";
+      };
+
       document
         .querySelectorAll(".content-nav ul a")
         .forEach((link) => link.addEventListener("click", addBorderBottom));
