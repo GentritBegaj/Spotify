@@ -153,7 +153,7 @@ function formatTime(seconds) {
 }
 
 function resetValues() {
-  currentDuration.textContent = "00:00";
+  // currentDuration.textContent = "00:00";
   if (!isNaN(track.duration)) {
     maxDuration.innerHTML = formatTime(track.duration);
   } else {
@@ -162,8 +162,39 @@ function resetValues() {
   durationSlider.value = 0;
 }
 
-function playSongFromImage() {
-  songId = this.getAttribute("id");
-  loadTrack(songId);
-  playSong();
+// ----------------------------------Login part-------------------------------
+
+function loginButtonPressed(hideButtons) {
+  let users = [
+    {
+      username: "John",
+      email: "johndoe@gmail.com",
+      password: "Doe",
+    },
+    {
+      username: "Billy",
+      email: "billyray@gmail.com",
+      password: "Ray",
+    },
+  ];
+  let usernameInput = document.querySelector("#usernameInput");
+  let passwordInput = document.querySelector("#passwordInput");
+  for (let i = 0; i < users.length; i++) {
+    if (
+      usernameInput.value == users[i].username &&
+      passwordInput.value == users[i].password
+    ) {
+      window.location = "homepage.html";
+
+      hideButtons();
+    } else {
+      window.location = "loginpage.html";
+      return;
+    }
+  }
+}
+
+function hideButtons() {
+  let signUpButtonHome = document.querySelector("#sign-up");
+  signUpButtonHome.style.display = "none";
 }
