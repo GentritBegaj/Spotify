@@ -850,6 +850,16 @@
                   </div>
                 </div>
               </div>
+              <input
+                type="text"
+                id="artistNameInput"
+                placeholder="Enter artist name"
+              />
+              <input
+                type="button"
+                class="btn btn-lg btn-dark"
+                onclick="getArtist()"
+              />
             </div>
           </main>
         </div>
@@ -1168,54 +1178,50 @@
         let loginButton = document.querySelector("#login");
         signUpButtonHome.value = isLoggedIn ? usernameFromInput : "block";
         loginButton.style.display = isLoggedIn ? "none" : "block";
-        loadData();
       };
-      function loadData() {
-        fetch("https://deezerdevs-deezer.p.rapidapi.com/search?q=eminem", {
-          method: "GET",
-          headers: {
-            "x-rapidapi-key":
-              "8d688f8c82msh41ea802837a983cp13b7c5jsn80cbb4fc29f7",
-            "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-          },
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then((parsedJSON) => {
-            console.log(parsedJSON);
-            let containerMain = document.querySelector(".container-div");
-            let newRow = document.createElement("div");
-            newRow.classList.add("row", "px-0", "mx-0");
-            containerMain.appendChild(newRow);
 
-            let count = 0;
+      async function getArtist() {
+        let searchValue = document.getElementById("artistNameInput").value;
+        const response = await fetch(
+          "https://deezerdevs-deezer.p.rapidapi.com/search?q=" + searchValue,
+          {
+            method: "GET",
+            headers: {
+              "x-rapidapi-key":
+                "8d688f8c82msh41ea802837a983cp13b7c5jsn80cbb4fc29f7",
+              "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+            },
+          }
+        );
 
-            parsedJSON.data.forEach((item) => {
-              if (count < 7) {
-                let albumCol = document.createElement("div");
-                albumCol.classList.add(
-                  "col-12",
-                  "col-sm-4",
-                  "col-md-3",
-                  "col-lg-2"
-                );
-
-                const albumTitle = document.createTextNode(item.title);
-
-                albumCol.appendChild(albumTitle);
-                albumCol.style.width = "200px";
-                albumCol.style.height = "200px";
-
-                newRow.appendChild(albumCol);
-                count++;
-              }
-            });
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        const parsedJSON = await response.json();
+        showAlbums(parsedJSON.data);
       }
+
+      const showAlbums = async (data) => {
+        let containerMain = document.querySelector(".container-div");
+        let newRow = document.createElement("div");
+        newRow.classList.add("row", "px-0", "mx-0");
+        containerMain.appendChild(newRow);
+
+        let count = 0;
+
+        data.forEach((item) => {
+          if (count < 6) {
+            let albumCol = document.createElement("div");
+            albumCol.classList.add("col-6", "col-sm-4", "col-md-3", "col-lg-2");
+            albumCol.innerHTML = `<div class="card bg-transparent">
+                                    <img src="${item.album.cover}" class="img-fluid" alt="...">
+                                  </div>
+                                  
+                                  <p>${item.title}</p>`;
+            console.log(albumCol);
+
+            newRow.appendChild(albumCol);
+            count++;
+          }
+        });
+      };
 
       document
         .querySelectorAll(".content-nav ul a")
@@ -1257,9 +1263,9 @@
       /* Get all the left sidebar's menu items */
       document.querySelectorAll(".menu--item").forEach((item) => {
         /*
-          When user clicks on a menu item => then toggle the .active class.
-          .active class is responsible for adding the background to the menu--item
-      */
+                When user clicks on a menu item => then toggle the .active class.
+                .active class is responsible for adding the background to the menu--item
+            */
         item.addEventListener("click", (e) => {
           e.preventDefault();
           const menuItem = e.target.closest(".menu--item");

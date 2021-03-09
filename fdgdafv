@@ -1,0 +1,46 @@
+function loadData() {
+        fetch("https://deezerdevs-deezer.p.rapidapi.com/search?q=eminem", {
+          method: "GET",
+          headers: {
+            "x-rapidapi-key":
+              "8d688f8c82msh41ea802837a983cp13b7c5jsn80cbb4fc29f7",
+            "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((parsedJSON) => {
+            console.log(parsedJSON);
+            let containerMain = document.querySelector(".container-div");
+            let newRow = document.createElement("div");
+            newRow.classList.add("row", "px-0", "mx-0");
+            containerMain.appendChild(newRow);
+
+            let count = 0;
+
+            parsedJSON.data.forEach((item) => {
+              if (count < 6) {
+                let albumCol = document.createElement("div");
+                albumCol.classList.add(
+                  "col-6",
+                  "col-sm-4",
+                  "col-md-3",
+                  "col-lg-2"
+                );
+                albumCol.innerHTML = `<div class="card bg-transparent">
+                                        <img src="${item.album.cover}" class="img-fluid" alt="...">
+                                      </div>
+                                      
+                                      <p>${item.title}</p>`;
+                console.log(albumCol);
+
+                newRow.appendChild(albumCol);
+                count++;
+              }
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
